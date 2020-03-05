@@ -1,0 +1,32 @@
+*,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #000;
+  color: whitesmoke;
+}
+
+h1,
+#aaa {
+  text-align: center;
+}
+
+#aaa {
+  /* text-align: center; */
+  padding: 20px;
+  /* max-width: fit-content; */
+  /* border: 2px solid rgb(198, 211, 16); */
+}
+
+#submit {
+  padding-top: 10px;
+}
+
+span {
+  text-align: right;
+  padding-left: 20px;
+  float: right;
+  color: rgb(223, 64, 64);
+}
