@@ -13,6 +13,53 @@
 //   });
 // });
 
+const initialData = {
+  todo: {
+    items: []
+  }
+};
+
+renderApp(initialData);
+
+function renderApp(data) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = App(data); // Why should you pass in data inside APP
+
+  rootElem
+    .querySelector(".form")
+    .addEventListener("submit", event => handleTodoFormAdd(event, data));
+}
+
+// todo form submit event handler
+
+function handleTodoFormAdd(event, data) {
+  event.preventDefault();
+  // Update data
+
+  const newItem = {
+    //Randomly generated ID TIME STAMP
+    id: `${Date.now()}`,
+
+    // The text the user entered
+    description: event.target.elements.todo.value,
+
+    // boolean defaults to false
+    isCompleted: false
+  };
+
+  const updatedData = {
+    ...data,
+    todo: {
+      items: [...data.todo.items, newItem]
+    }
+  };
+
+  console.log("Hiiiiii");
+
+  // Re-render components
+  renderApp(updatedData);
+}
+
 function App(props) {
   return `
   <h1>ToDo List</h1>
@@ -27,7 +74,7 @@ function App(props) {
             ${Buttons(props)}
             <br /><br /><br />
 
-            ${TodoList(props)}
+            ${TodoList(props.todo)} 
               </div>
             </div>
           </div>
@@ -46,7 +93,12 @@ function TodoList(props) {
                   <div class="col-3"></div>
                   <div class="col-6">
                     <ol id="list">
-                      ${ToDoItem(props)}
+                     
+                     ${props.items
+                       .map(function(todoItem) {
+                         return ToDoItem(todoItem);
+                       })
+                       .join("")}
                     </ol>
                   </div>
                   <div class="col-3"></div>
@@ -60,7 +112,7 @@ function ToDoItem(props) {
   return `
     <section>
         <li class="addlist">
-          Buy groceries<span class=".comp"> &#10004;</span>
+          ${props.description}<span class=".comp"> &#10004;</span>
           <span class=".rem">X</span>
         </li>
       </section>
@@ -72,7 +124,7 @@ function Form(props) {
           <form class="form">
               <textarea name="todo" id="todo" cols="30" rows="1"></textarea
               ><br />
-              <button type="button" id="submit" class="btn btn-info">
+              <button type="submit" id="submit" class="btn btn-info">
                 Submit
               </button>
             </form>`;
@@ -87,4 +139,4 @@ function Buttons(props) {
             </div>`;
 }
 
-document.body.innerHTML = App({});
+// document.body.innerHTML = App({});
